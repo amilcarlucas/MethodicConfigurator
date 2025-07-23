@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 0.9.17\n"
-"POT-Creation-Date: 2025-07-19 17:00+0000\n"
+"POT-Creation-Date: 2025-07-23 12:48+0000\n"
 "PO-Revision-Date: 2024-12-02 13:13+0100\n"
 "Last-Translator: Dr.-Ing. Amilcar do Carmo Lucas <amilcar.lucas@iav.de>\n"
 "Language-Team: \n"
@@ -229,11 +229,11 @@ msgstr ""
 "Die zuletzt hochgeladene Datei ist die letzte Datei in der Liste. Starte vom "
 "Anfang."
 
-#: ardupilot_methodic_configurator/backend_filesystem.py:867
+#: ardupilot_methodic_configurator/backend_filesystem.py:871
 msgid "The type of the vehicle. Default is ArduCopter"
 msgstr "Der Typ des Fahrzeugs. Standard ist ArduCopter"
 
-#: ardupilot_methodic_configurator/backend_filesystem.py:873
+#: ardupilot_methodic_configurator/backend_filesystem.py:877
 msgid ""
 "Directory containing vehicle-specific intermediate parameter files. Default "
 "is the current working directory"
@@ -241,7 +241,7 @@ msgstr ""
 "Verzeichnis mit fahrzeugspezifischen Zwischenparameterdateien. Standard ist "
 "das aktuelle Arbeitsverzeichnis"
 
-#: ardupilot_methodic_configurator/backend_filesystem.py:881
+#: ardupilot_methodic_configurator/backend_filesystem.py:885
 msgid ""
 "Start directly on the nth intermediate parameter file (skips previous "
 "files). Default is to start on the file next to the last that you wrote to "
@@ -253,7 +253,7 @@ msgstr ""
 "Sie in den Flugcontroller geschrieben haben. Wenn die Datei nicht existiert, "
 "wird mit der ersten Datei begonnen."
 
-#: ardupilot_methodic_configurator/backend_filesystem.py:890
+#: ardupilot_methodic_configurator/backend_filesystem.py:894
 msgid ""
 "Allow opening and editing template files directly. Only for software "
 "developers that know what they are doing. Default is %(default)s"
@@ -261,7 +261,7 @@ msgstr ""
 "Erlaubt das direkte Öffnen und Bearbeiten von Vorlagendateien. Nur für "
 "Softwareentwickler, die wissen, was sie tun. Standard ist %(default)s"
 
-#: ardupilot_methodic_configurator/backend_filesystem.py:899
+#: ardupilot_methodic_configurator/backend_filesystem.py:903
 msgid ""
 "Save the vehicle component to the system templates. Only for software "
 "developers that know what they are doing. Default is %(default)s"
@@ -375,32 +375,26 @@ msgstr ""
 "configuration_steps_filename} verfügbar"
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:60
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:68
 msgid "Schema file '%s' is valid."
 msgstr "Schema-Datei '%s' ist gültig."
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:62
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:70
 msgid "Schema file '%s' is not a valid JSON Schema: %s"
 msgstr "Schema-Datei '%s' ist kein gültiges JSON-Schema: %s"
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:67
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:75
 msgid "Schema file '%s' not found."
 msgstr "Schema-Datei '%s' nicht gefunden."
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:69
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:77
 msgid "Error decoding JSON schema from file '%s'."
 msgstr "Fehler beim Dekodieren des JSON-Schemas aus Datei '%s'."
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:81
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:290
 msgid "Could not load validation schema"
 msgstr "Validierungsschema konnte nicht geladen werden"
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:87
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:296
 msgid "Validation error"
 msgstr "Validierungsfehler"
 
@@ -409,12 +403,10 @@ msgid "Invalid JSON file '%s': %s"
 msgstr "Ungültige JSON-Datei '%s': %s"
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:103
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:312
 msgid "File '%s' not found in %s."
 msgstr "Datei '%s' nicht gefunden in %s."
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:105
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:314
 msgid "Error decoding JSON data from file '%s'."
 msgstr "Fehler beim Decodieren der JSON-Daten aus der Datei '%s'."
 
@@ -423,39 +415,32 @@ msgid "Cannot save invalid JSON data: {}"
 msgstr "Kann ungültige JSON-Daten nicht speichern: {}"
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:130
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:339
 msgid "Directory '{}' not found"
 msgstr "Verzeichnis '{}' nicht gefunden"
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:134
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:271
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:343
+#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:241
 msgid "Permission denied when writing to file '{}'"
 msgstr "Schreibberechtigung für Datei '{}' verweigert"
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:138
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:347
 msgid "Path '{}' is a directory, not a file"
 msgstr "Pfad '{}' ist ein Verzeichnis, keine Datei"
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:142
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:274
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:351
+#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:244
 msgid "OS error when writing to file '{}': {}"
 msgstr "Betriebssystemfehler beim Schreiben in Datei '{}': {}"
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:146
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:355
 msgid "Type error when serializing data to JSON: {}"
 msgstr "Typfehler beim Serialisieren von Daten in JSON: {}"
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:150
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:359
 msgid "Value error when serializing data to JSON: {}"
 msgstr "Wertfehler beim Serialisieren von Daten in JSON: {}"
 
 #: ardupilot_methodic_configurator/backend_filesystem_json_with_schema.py:155
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:364
 msgid "Unexpected error saving data to file '{}': {}"
 msgstr "Unerwarteter Fehler beim Speichern von Daten in Datei '{}': {}"
 
@@ -518,59 +503,47 @@ msgstr "Mehrere Motordiagramme für Klasse %d und Typ %d gefunden"
 msgid "Motor diagram not found for class %d and type %d"
 msgstr "Motordiagramm für Klasse %d und Typ %d nicht gefunden"
 
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:135
+#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:105
 msgid "System component templates file '%s' not found."
 msgstr "Systemkomponenten-Vorlagendatei '%s' nicht gefunden."
 
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:137
+#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:107
 msgid "Error decoding JSON system component templates from file '%s'."
 msgstr ""
 "Fehler beim Dekodieren der JSON-Systemkomponentenvorlagen aus Datei '%s'."
 
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:155
+#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:125
 msgid "User component templates file '%s' not found."
 msgstr "Benutzerkomponenten-Vorlagendatei '%s' nicht gefunden."
 
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:157
+#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:127
 msgid "Error decoding JSON user component templates from file '%s'."
 msgstr ""
 "Fehler beim Dekodieren der JSON-Benutzerkomponentenvorlagen aus Datei '%s'."
 
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:256
+#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:226
 msgid "Failed to create templates directory '{}': {}"
 msgstr "Vorlagenverzeichnis '{}' konnte nicht erstellt werden: {}"
 
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:268
+#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:238
 msgid "File not found when writing to '{}': {}"
 msgstr "Datei nicht gefunden beim Schreiben nach '{}': {}"
 
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:268
+#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:238
 msgid "Path not found"
 msgstr "Pfad nicht gefunden"
 
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:277
+#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:247
 msgid "Unexpected error saving templates to file '{}': {}"
 msgstr "Unerwarteter Fehler beim Speichern der Vorlagen in Datei '{}': {}"
 
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:308
-msgid "Invalid vehicle components file '%s': %s"
-msgstr "Ungültige Fahrzeugkomponentendatei '%s': %s"
-
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:379
-msgid ""
-"Firmware type {fw_type} in {self.vehicle_components_json_filename} is not "
-"supported"
+#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:280
+msgid "Firmware type {fw_type} in {filename} is not supported"
 msgstr ""
-"Firmwaretyp {fw_type} in {self.vehicle_components_json_filename} wird nicht "
-"unterstützt"
 
-#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:393
-msgid ""
-"FW version string {version_str} on {self.vehicle_components_json_filename} "
-"is invalid"
+#: ardupilot_methodic_configurator/backend_filesystem_vehicle_components.py:292
+msgid "FW version string {version_str} on {filename} is invalid"
 msgstr ""
-"FW-Versuchstring {version_str} in {self.vehicle_components_json_filename} "
-"ist ungültig"
 
 #: ardupilot_methodic_configurator/backend_flightcontroller.py:82
 msgid "You should uninstall ModemManager as it conflicts with ArduPilot"
@@ -3175,7 +3148,7 @@ msgstr ""
 #: ardupilot_methodic_configurator/frontend_tkinter_component_editor_base.py:544
 #: ardupilot_methodic_configurator/frontend_tkinter_component_template_manager.py:87
 #: ardupilot_methodic_configurator/frontend_tkinter_flightcontroller_info.py:118
-#: tests/test_frontend_tkinter_component_editor_base.py:1445
+#: tests/test_frontend_tkinter_component_editor_base.py:1448
 msgid "Error"
 msgstr "Fehler"
 
@@ -3779,7 +3752,11 @@ msgid ""
 "Copy the vehicle.jpg image file from the template directory to the new "
 "vehicle directory\n"
 "if it exists. This image helps identify the vehicle configuration."
-msgstr "Kopiere die vehicle.jpg Bilddatei aus dem Vorlagenverzeichnis in das neue Fahrzeugverzeichnis\nfalls sie existiert. Dieses Bild hilft bei der Identifizierung der Fahrzeugkonfiguration."
+msgstr ""
+"Kopiere die vehicle.jpg Bilddatei aus dem Vorlagenverzeichnis in das neue "
+"Fahrzeugverzeichnis\n"
+"falls sie existiert. Dieses Bild hilft bei der Identifizierung der "
+"Fahrzeugkonfiguration."
 
 #: ardupilot_methodic_configurator/frontend_tkinter_directory_selection.py:383
 msgid ""
@@ -4362,17 +4339,17 @@ msgid "Update file with values from FC?"
 msgstr "Update-Datei mit Werten vom FC?"
 
 #: ardupilot_methodic_configurator/frontend_tkinter_parameter_editor.py:509
-#: tests/test_frontend_tkinter_parameter_editor.py:153
+#: tests/test_frontend_tkinter_parameter_editor.py:193
 msgid "Close"
 msgstr "Schließen"
 
 #: ardupilot_methodic_configurator/frontend_tkinter_parameter_editor.py:517
-#: tests/test_frontend_tkinter_parameter_editor.py:99
+#: tests/test_frontend_tkinter_parameter_editor.py:107
 msgid "Yes"
 msgstr "Ja"
 
 #: ardupilot_methodic_configurator/frontend_tkinter_parameter_editor.py:523
-#: tests/test_frontend_tkinter_parameter_editor.py:126
+#: tests/test_frontend_tkinter_parameter_editor.py:150
 msgid "No"
 msgstr "Nein"
 
@@ -5751,3 +5728,20 @@ msgstr "Version oder Revision der Hardware"
 #: ardupilot_methodic_configurator/vehicle_components.py:122
 msgid "Web link to the product page or documentation"
 msgstr "Weblink zur Produktseite oder Dokumentation"
+
+#~ msgid "Invalid vehicle components file '%s': %s"
+#~ msgstr "Ungültige Fahrzeugkomponentendatei '%s': %s"
+
+#~ msgid ""
+#~ "Firmware type {fw_type} in {self.vehicle_components_json_filename} is not "
+#~ "supported"
+#~ msgstr ""
+#~ "Firmwaretyp {fw_type} in {self.vehicle_components_json_filename} wird "
+#~ "nicht unterstützt"
+
+#~ msgid ""
+#~ "FW version string {version_str} on {self."
+#~ "vehicle_components_json_filename} is invalid"
+#~ msgstr ""
+#~ "FW-Versuchstring {version_str} in {self.vehicle_components_json_filename} "
+#~ "ist ungültig"
