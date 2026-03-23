@@ -420,7 +420,7 @@ class ComponentDataModelValidation(ComponentDataModelBase):
         component_name = path[0]
         section = path[1]
 
-        if section not in ("FC Connection", "FC->ESC Connection", "ESC->FC Telemetry", "FC->ESC Telemetry"):
+        if section not in ("FC Connection", "FC->ESC Connection", "ESC->FC Telemetry"):
             return
 
         protocol_path: ComponentPath = (component_name, section, "Protocol")
