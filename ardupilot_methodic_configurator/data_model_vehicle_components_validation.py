@@ -414,83 +414,86 @@ class ComponentDataModelValidation(ComponentDataModelBase):
     ) -> None:
         """Update _possible_choices when connection type values that affect protocol choices are changed."""
         # Only update if this is a connection type change that affects protocol choices
-        if len(path) >= 3 and path[1] == "FC Connection" and path[2] == "Type" and isinstance(value, str):
-            component_name = path[0]
-            protocol_path: ComponentPath = (component_name, "FC Connection", "Protocol")
+        if len(path) < 3 or path[2] != "Type" or not isinstance(value, str):
+            return
 
-            # Calculate the new possible choices for the corresponding protocol field
-            if component_name == "RC Receiver":
-                # Filter RC protocols based on the selected connection type
-                if value == "None":
-                    new_choices: tuple[str, ...] = ("None",)
-                else:
-                    # For any connection type, find protocols that support it
-                    new_choices = tuple(str(v["protocol"]) for v in RC_PROTOCOLS_DICT.values() if value in v["type"])
-                self._possible_choices[protocol_path] = new_choices
+        component_name = path[0]
+        section = path[1]
 
-            elif component_name == "Telemetry":
-                if value == "None":
-                    self._possible_choices[protocol_path] = ("None",)
-                else:
-                    # For non-None telemetry connections, use the standard telemetry protocols
-                    self._possible_choices[protocol_path] = tuple(
-                        str(v["protocol"]) for v in SERIAL_PROTOCOLS_DICT.values() if v["component"] == "Telemetry"
-                    )
+        if section not in ("FC Connection", "FC->ESC Connection", "ESC->FC Telemetry", "FC->ESC Telemetry"):
+            return
 
-            elif component_name == "Battery Monitor":
-                if value == "None":
-                    self._possible_choices[protocol_path] = ("None",)
-                    return
+        protocol_path: ComponentPath = (component_name, section, "Protocol")
 
-                # Find protocols available for the selected connection type
-                batt_available_protocols: list[str] = []
-                for conn_dict in BATT_MONITOR_CONNECTION.values():
-                    conn_type = conn_dict["type"]
-                    # Handle both list and direct port type references
-                    if isinstance(conn_type, list):
-                        if value in conn_type:
-                            batt_available_protocols.append(str(conn_dict["protocol"]))
-                    elif value in conn_type:
-                        # conn_type is a reference to a port list (e.g., ANALOG_PORTS, I2C_PORTS)
+        # Calculate the new possible choices for the corresponding protocol field
+        if component_name == "RC Receiver":
+            # Filter RC protocols based on the selected connection type
+            if value == "None":
+                new_choices: tuple[str, ...] = ("None",)
+            else:
+                # For any connection type, find protocols that support it
+                new_choices = tuple(str(v["protocol"]) for v in RC_PROTOCOLS_DICT.values() if value in v["type"])
+            self._possible_choices[protocol_path] = new_choices
+
+        elif component_name == "Telemetry":
+            if value == "None":
+                self._possible_choices[protocol_path] = ("None",)
+            else:
+                # For non-None telemetry connections, use the standard telemetry protocols
+                self._possible_choices[protocol_path] = tuple(
+                    str(v["protocol"]) for v in SERIAL_PROTOCOLS_DICT.values() if v["component"] == "Telemetry"
+                )
+
+        elif component_name == "Battery Monitor":
+            if value == "None":
+                self._possible_choices[protocol_path] = ("None",)
+                return
+
+            # Find protocols available for the selected connection type
+            batt_available_protocols: list[str] = []
+            for conn_dict in BATT_MONITOR_CONNECTION.values():
+                conn_type = conn_dict["type"]
+                # Handle both list and direct port type references
+                if isinstance(conn_type, list):
+                    if value in conn_type:
                         batt_available_protocols.append(str(conn_dict["protocol"]))
+                elif value in conn_type:
+                    # conn_type is a reference to a port list (e.g., ANALOG_PORTS, I2C_PORTS)
+                    batt_available_protocols.append(str(conn_dict["protocol"]))
 
-                self._possible_choices[protocol_path] = (
-                    tuple(batt_available_protocols) if batt_available_protocols else ("None",)
+            self._possible_choices[protocol_path] = tuple(batt_available_protocols) if batt_available_protocols else ("None",)
+
+        elif component_name == "ESC":
+            if value == "None":
+                self._possible_choices[protocol_path] = ("None",)
+            elif value in CAN_PORTS:
+                self._possible_choices[protocol_path] = ("DroneCAN",)
+            elif value in SERIAL_PORTS:
+                self._possible_choices[protocol_path] = tuple(
+                    str(v["protocol"]) for v in SERIAL_PROTOCOLS_DICT.values() if v["component"] == "ESC"
                 )
+            else:
+                # For PWM outputs, use motor PWM types
+                self._possible_choices[protocol_path] = self._mot_pwm_types
 
-            elif component_name == "ESC":
-                if value == "None":
-                    self._possible_choices[protocol_path] = ("None",)
-                elif value in CAN_PORTS:
-                    self._possible_choices[protocol_path] = ("DroneCAN",)
-                elif value in SERIAL_PORTS:
-                    self._possible_choices[protocol_path] = tuple(
-                        str(v["protocol"]) for v in SERIAL_PROTOCOLS_DICT.values() if v["component"] == "ESC"
-                    )
-                else:
-                    # For PWM outputs, use motor PWM types
-                    self._possible_choices[protocol_path] = self._mot_pwm_types
+        elif component_name == "GNSS Receiver":
+            if value == "None":
+                self._possible_choices[protocol_path] = ("None",)
+                return
 
-            elif component_name == "GNSS Receiver":
-                if value == "None":
-                    self._possible_choices[protocol_path] = ("None",)
-                    return
-
-                # Find protocols available for the selected connection type
-                gnss_available_protocols: list[str] = []
-                for conn_dict in GNSS_RECEIVER_CONNECTION.values():
-                    conn_type = conn_dict["type"]
-                    # Handle both list and direct port type references
-                    if isinstance(conn_type, list):
-                        if value in conn_type:
-                            gnss_available_protocols.append(str(conn_dict["protocol"]))
-                    elif value in conn_type:
-                        # conn_type is a reference to a port list (e.g., SERIAL_PORTS, CAN_PORTS)
+            # Find protocols available for the selected connection type
+            gnss_available_protocols: list[str] = []
+            for conn_dict in GNSS_RECEIVER_CONNECTION.values():
+                conn_type = conn_dict["type"]
+                # Handle both list and direct port type references
+                if isinstance(conn_type, list):
+                    if value in conn_type:
                         gnss_available_protocols.append(str(conn_dict["protocol"]))
+                elif value in conn_type:
+                    # conn_type is a reference to a port list (e.g., SERIAL_PORTS, CAN_PORTS)
+                    gnss_available_protocols.append(str(conn_dict["protocol"]))
 
-                self._possible_choices[protocol_path] = (
-                    tuple(gnss_available_protocols) if gnss_available_protocols else ("None",)
-                )
+            self._possible_choices[protocol_path] = tuple(gnss_available_protocols) if gnss_available_protocols else ("None",)
 
     def validate_entry_limits(self, value: str, path: ComponentPath) -> tuple[str, Optional[float]]:  # noqa: PLR0911 # pylint: disable=too-many-return-statements
         """
