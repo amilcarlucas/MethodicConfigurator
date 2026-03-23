@@ -51,7 +51,11 @@ class TestValidationConstants:
 
         # All paths should follow the pattern (Component, "FC Connection", "Type")
         for path in FC_CONNECTION_TYPE_PATHS:
-            assert path[1] in ["FC Connection", "FC->ESC Connection", "FC->ESC Telemetry"]
+            assert path[1] in [
+                "FC Connection",
+                "FC->ESC Connection",
+                "ESC->FC Telemetry",
+            ]
             assert path[2] == "Type"
 
     def test_battery_cell_voltage_paths_structure(self) -> None:
@@ -69,8 +73,10 @@ class TestValidationConstants:
         # Verify specific required paths exist
         expected_paths = [
             ("Battery", "Specifications", "Volt per cell max"),
+            ("Battery", "Specifications", "Volt per cell arm"),
             ("Battery", "Specifications", "Volt per cell low"),
             ("Battery", "Specifications", "Volt per cell crit"),
+            ("Battery", "Specifications", "Volt per cell min"),
         ]
 
         for expected_path in expected_paths:
@@ -82,12 +88,18 @@ class TestValidationConstants:
             assert path[1] == "Specifications"
             assert path[2].startswith("Volt per cell")
 
-        # Should contain exactly the three expected voltage types
-        assert len(BATTERY_CELL_VOLTAGE_PATHS) == 3
+        # Should contain exactly the five expected voltage types
+        assert len(BATTERY_CELL_VOLTAGE_PATHS) == 5
 
         # Verify that the expected voltage types are present
         voltage_types = {path[2] for path in BATTERY_CELL_VOLTAGE_PATHS}
-        expected_voltage_types = {"Volt per cell max", "Volt per cell low", "Volt per cell crit"}
+        expected_voltage_types = {
+            "Volt per cell max",
+            "Volt per cell arm",
+            "Volt per cell low",
+            "Volt per cell crit",
+            "Volt per cell min",
+        }
         assert voltage_types == expected_voltage_types
 
         # Should not have duplicates

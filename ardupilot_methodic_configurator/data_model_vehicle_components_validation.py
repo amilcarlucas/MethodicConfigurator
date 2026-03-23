@@ -91,8 +91,10 @@ FC_CONNECTION_TYPE_PATHS: list[ComponentPath] = [
 
 BATTERY_CELL_VOLTAGE_PATHS: list[ComponentPath] = [
     ("Battery", "Specifications", "Volt per cell max"),
+    ("Battery", "Specifications", "Volt per cell arm"),
     ("Battery", "Specifications", "Volt per cell low"),
     ("Battery", "Specifications", "Volt per cell crit"),
+    ("Battery", "Specifications", "Volt per cell min"),
 ]
 
 # Protocol dictionaries
@@ -261,6 +263,15 @@ FRAME_CLASS_DICT: dict[int, str] = {
     17: "Dynamic Scripting Matrix",
 }
 
+# ESC->FC telemetry connections
+ESC_TELEMETRY_DICT: dict[str, dict[str, Union[list[str], str]]] = {
+    "0": {"type": ["None"], "protocol": "None"},
+    "1": {"type": PWM_OUT_PORTS, "protocol": "BDShot"},
+    "2": {"type": CAN_PORTS, "protocol": "DroneCAN"},
+    "3": {"type": SERIAL_PORTS, "protocol": "DShot"},
+    "4": {"type": SERIAL_PORTS, "protocol": "FETtec OneWire"},
+}
+
 
 class ComponentDataModelValidation(ComponentDataModelBase):
     """
@@ -380,9 +391,22 @@ class ComponentDataModelValidation(ComponentDataModelBase):
             ("Battery", "Specifications", "Chemistry"): BatteryCell.chemistries(),
         }
         for component in ["RC Receiver", "Telemetry", "Battery Monitor", "ESC", "GNSS Receiver"]:
-            if component in self._data["Components"]:
+            if component not in self._data.get("Components", {}):
+                continue
+
+            if component == "ESC":
                 self._update_possible_choices_for_path(
-                    (component, "FC Connection", "Type"), self.get_component_value((component, "FC Connection", "Type"))
+                    ("ESC", "FC->ESC Connection", "Type"),
+                    self.get_component_value(("ESC", "FC->ESC Connection", "Type")),
+                )
+                self._update_possible_choices_for_path(
+                    ("ESC", "ESC->FC Telemetry", "Type"),
+                    self.get_component_value(("ESC", "ESC->FC Telemetry", "Type")),
+                )
+            else:
+                self._update_possible_choices_for_path(
+                    (component, "FC Connection", "Type"),
+                    self.get_component_value((component, "FC Connection", "Type")),
                 )
 
     def _update_possible_choices_for_path(  # pylint: disable=too-many-branches

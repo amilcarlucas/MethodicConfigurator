@@ -406,7 +406,7 @@ class ComponentDataModelImport(ComponentDataModelBase):
 
         Args:
             chemistry: Battery chemistry type
-            voltage_type: One of "recommended_max", "recommended_low", "recommended_crit"
+            voltage_type: One of "recommended_max", "recommended_arm", "recommended_low", "recommended_crit", "recommended_min"
 
         Returns:
             Voltage per cell value
@@ -414,10 +414,13 @@ class ComponentDataModelImport(ComponentDataModelBase):
         """
         if voltage_type == "recommended_max":
             return BatteryCell.recommended_max_voltage(chemistry)
+        if voltage_type == "recommended_arm":
+            return BatteryCell.recommended_arm_voltage(chemistry)
         if voltage_type == "recommended_low":
             return BatteryCell.recommended_low_voltage(chemistry)
-        # voltage_type == "recommended_crit"
-        return BatteryCell.recommended_crit_voltage(chemistry)
+        if voltage_type == "recommended_crit":
+            return BatteryCell.recommended_crit_voltage(chemistry)
+        return BatteryCell.recommended_min_voltage(chemistry)
 
     def _detect_battery_chemistry_from_voltages(
         self, fc_parameters: dict[str, float], current_chemistry: Optional[str] = None
@@ -443,6 +446,7 @@ class ComponentDataModelImport(ComponentDataModelBase):
             ("MOT_BAT_VOLT_MAX", "recommended_max"),
             ("BATT_LOW_VOLT", "recommended_low"),
             ("BATT_CRT_VOLT", "recommended_crit"),
+            ("BATT_ARM_VOLT", "recommended_arm"),  # lower priority, less commonly set, but can provide additional clues if available
         ]
 
         # Try each voltage parameter in priority order

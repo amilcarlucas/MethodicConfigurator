@@ -391,7 +391,7 @@ class VehicleComponents:
                     },
                 },
                 "ESC": {
-                    "FC Connection": {"Type": "Main Out", "Protocol": "Normal"},
+                    "FC->ESC Connection": {"Type": "Main Out", "Protocol": "Normal"},
                 },
                 "Motors": {
                     "Specifications": {"Poles": 14},
