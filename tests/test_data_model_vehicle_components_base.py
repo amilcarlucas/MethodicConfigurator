@@ -879,7 +879,7 @@ class TestComponentDataModelBase(BasicTestMixin, RealisticDataTestMixin):
             (("Battery", "Specifications", "Capacity mAh"), 2000),
             (("Frame", "Specifications", "Weight Kg"), 1.5),
             (("Flight Controller", "Product", "Manufacturer"), "TestCorp"),
-            (("ESC", "FC Connection", "Protocol"), "DShot600"),
+            (("ESC", "FC->ESC Connection", "Protocol"), "DShot600"),
             (("Motors", "Specifications", "Poles"), 14),
         ]
 

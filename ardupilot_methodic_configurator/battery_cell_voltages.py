@@ -15,6 +15,7 @@ battery_cell_voltages = {
         "absolute_max": 4.2,
         "absolute_min": 2.5,
         "recommended_max": 4.1,
+        "recommended_arm": 3.6,
         "recommended_low": 3.1,
         "recommended_crit": 2.8,
     },
@@ -22,6 +23,7 @@ battery_cell_voltages = {
         "absolute_max": 4.2,
         "absolute_min": 2.4,
         "recommended_max": 4.2,
+        "recommended_arm": 3.6,
         "recommended_low": 3.0,
         "recommended_crit": 2.7,
     },
@@ -29,6 +31,7 @@ battery_cell_voltages = {
         "absolute_max": 4.45,
         "absolute_min": 2.4,
         "recommended_max": 4.45,
+        "recommended_arm": 3.8,
         "recommended_low": 3.0,
         "recommended_crit": 2.7,
     },
@@ -36,6 +39,7 @@ battery_cell_voltages = {
         "absolute_max": 4.2,
         "absolute_min": 3.0,
         "recommended_max": 4.2,
+        "recommended_arm": 3.8,
         "recommended_low": 3.6,
         "recommended_crit": 3.3,
     },
@@ -43,6 +47,7 @@ battery_cell_voltages = {
         "absolute_max": 4.35,
         "absolute_min": 3.0,
         "recommended_max": 4.35,
+        "recommended_arm": 3.9,
         "recommended_low": 3.6,
         "recommended_crit": 3.3,
     },
@@ -50,6 +55,7 @@ battery_cell_voltages = {
         "absolute_max": 4.2,
         "absolute_min": 2.9,
         "recommended_max": 4.2,
+        "recommended_arm": 3.8,
         "recommended_low": 3.5,
         "recommended_crit": 3.2,
     },
@@ -57,6 +63,7 @@ battery_cell_voltages = {
         "absolute_max": 1.45,
         "absolute_min": 1.0,
         "recommended_max": 1.4,
+        "recommended_arm": 1.28,
         "recommended_low": 1.2,
         "recommended_crit": 1.1,
     },
@@ -64,6 +71,7 @@ battery_cell_voltages = {
         "absolute_max": 1.45,
         "absolute_min": 1.0,
         "recommended_max": 1.4,
+        "recommended_arm": 1.28,
         "recommended_low": 1.2,
         "recommended_crit": 1.1,
     },
@@ -104,6 +112,12 @@ class BatteryCell:
         return battery_cell_voltages[chemistry].get("recommended_max", 4.2)
 
     @staticmethod
+    def recommended_arm_voltage(chemistry: str) -> float:
+        if chemistry not in battery_cell_voltages:
+            return nan
+        return battery_cell_voltages[chemistry].get("recommended_arm", 3.8)
+
+    @staticmethod
     def recommended_low_voltage(chemistry: str) -> float:
         if chemistry not in battery_cell_voltages:
             return nan
@@ -114,3 +128,9 @@ class BatteryCell:
         if chemistry not in battery_cell_voltages:
             return nan
         return battery_cell_voltages[chemistry].get("recommended_crit", 3.3)
+
+    @staticmethod
+    def recommended_min_voltage(chemistry: str) -> float:
+        if chemistry not in battery_cell_voltages:
+            return nan
+        return battery_cell_voltages[chemistry].get("absolute_min", BatteryCell.limit_min_voltage(chemistry))

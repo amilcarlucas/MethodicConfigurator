@@ -51,7 +51,7 @@ class TestValidationConstants:
 
         # All paths should follow the pattern (Component, "FC Connection", "Type")
         for path in FC_CONNECTION_TYPE_PATHS:
-            assert path[1] == "FC Connection"
+            assert path[1] in ["FC Connection", "FC->ESC Connection", "FC->ESC Telemetry"]
             assert path[2] == "Type"
 
     def test_battery_cell_voltage_paths_structure(self) -> None:

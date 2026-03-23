@@ -84,7 +84,8 @@ FC_CONNECTION_TYPE_PATHS: list[ComponentPath] = [
     ("RC Receiver", "FC Connection", "Type"),
     ("Telemetry", "FC Connection", "Type"),
     ("Battery Monitor", "FC Connection", "Type"),
-    ("ESC", "FC Connection", "Type"),
+    ("ESC", "FC->ESC Connection", "Type"),
+    ("ESC", "ESC->FC Telemetry", "Type"),
     ("GNSS Receiver", "FC Connection", "Type"),
 ]
 
@@ -239,6 +240,27 @@ RC_PROTOCOLS_DICT: dict[str, dict[str, Union[list[str], str]]] = {
     "65536": {"type": RC_PORTS + SERIAL_PORTS, "protocol": "MAVRadio"},  # Bit 16
 }
 
+FRAME_CLASS_DICT: dict[int, str] = {
+    0: "Undefined",
+    1: "Quad",
+    2: "Hexa",
+    3: "Octa",
+    4: "OctaQuad",
+    5: "Y6",
+    6: "Heli",
+    7: "Tri",
+    8: "SingleCopter",
+    9: "CoaxCopter",
+    10: "BiCopter",
+    11: "Heli_Dual",
+    12: "DodecaHexa",
+    13: "HeliQuad",
+    14: "Deca",
+    15: "Scripting Matrix",
+    16: "6DoF Scripting",
+    17: "Dynamic Scripting Matrix",
+}
+
 
 class ComponentDataModelValidation(ComponentDataModelBase):
     """
@@ -269,10 +291,16 @@ class ComponentDataModelValidation(ComponentDataModelBase):
                 ("Battery", "Specifications", "Volt per cell max"), BatteryCell.recommended_max_voltage(value)
             )
             self.set_component_value(
+                ("Battery", "Specifications", "Volt per cell arm"), BatteryCell.recommended_arm_voltage(value)
+            )
+            self.set_component_value(
                 ("Battery", "Specifications", "Volt per cell low"), BatteryCell.recommended_low_voltage(value)
             )
             self.set_component_value(
                 ("Battery", "Specifications", "Volt per cell crit"), BatteryCell.recommended_crit_voltage(value)
+            )
+            self.set_component_value(
+                ("Battery", "Specifications", "Volt per cell min"), BatteryCell.recommended_min_voltage(value)
             )
 
         # Update possible choices for protocol fields when connection type changes
@@ -345,8 +373,8 @@ class ComponentDataModelValidation(ComponentDataModelBase):
             ),
             ("Battery Monitor", "FC Connection", "Type"): get_connection_types(BATT_MONITOR_CONNECTION),
             ("Battery Monitor", "FC Connection", "Protocol"): get_combobox_values("BATT_MONITOR"),
-            ("ESC", "FC Connection", "Type"): (*PWM_OUT_PORTS, *SERIAL_PORTS, *CAN_PORTS),
-            ("ESC", "FC Connection", "Protocol"): self._mot_pwm_types,
+            ("ESC", "FC->ESC Connection", "Type"): (*PWM_OUT_PORTS, *SERIAL_PORTS, *CAN_PORTS),
+            ("ESC", "FC->ESC Connection", "Protocol"): self._mot_pwm_types,
             ("GNSS Receiver", "FC Connection", "Type"): ("None", *SERIAL_PORTS, *CAN_PORTS),
             ("GNSS Receiver", "FC Connection", "Protocol"): get_all_protocols(GNSS_RECEIVER_CONNECTION),
             ("Battery", "Specifications", "Chemistry"): BatteryCell.chemistries(),
